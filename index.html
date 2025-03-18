@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GeoAR.js Demo</title>
     
-    <!-- Carga de A-Frame -->
+    <!-- Cargar A-Frame más reciente -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 
-    <!-- Carga de AR.js -->
-    <script src="https://aframe.io/releases/1.2.0/aframe-ar.min.js"></script>
+    <!-- Cargar AR.js con soporte para GPS -->
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
 
-    <!-- Carga de A-Frame Extras para GLTF -->
+    <!-- Cargar A-Frame Extras (para modelos GLTF) -->
     <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
-    <!-- La escena de A-Frame debe envolver todo -->
+    <!-- Escena principal de A-Frame con soporte para AR.js -->
     <a-scene embedded arjs>
         
         <!-- Modelo 3D con GPS -->
-        <a-entity gltf-model="./assets/magnemite/scene.gltf"
-                  rotation="0 180 0"
-                  scale="0.15 0.15 0.15"
-                  gps-entity-place="longitude: 12.489820; latitude: 41.892590;"
-                  animation-mixer>
+        <a-entity 
+            gltf-model="./assets/magnemite/scene.gltf"
+            rotation="0 180 0"
+            scale="0.15 0.15 0.15"
+            gps-entity-place="longitude: 12.489820; latitude: 41.892590;"
+            animation-mixer>
         </a-entity>
 
         <!-- Cámara con GPS -->
         <a-camera gps-camera rotation-reader></a-camera>
-        
+
     </a-scene>
 </body>
 </html>
