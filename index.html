@@ -7,19 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoAR.js Demo</title>
 
-    <!-- A-Frame (Versión más reciente estable compatible con AR.js) -->
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <!-- Cargar una versión estable de THREE.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r117/three.min.js"></script>
 
-    <!-- AR.js con soporte para WebXR y GPS -->
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
+    <!-- A-Frame (Versión recomendada para AR.js) -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 
-    <!-- A-Frame Extras para modelos GLTF -->
+    <!-- AR.js con soporte para GPS -->
+    <script src="https://raw.githack.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+
+    <!-- Extras para GLTF -->
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras/dist/aframe-extras.loaders.min.js"></script>
 
-    <!-- Archivo JavaScript propio -->
-    <script src="./script.js" defer></script>
+    <!-- Configuración AR.js -->
+    <script>
+        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/';
+    </script>
 
-    <!-- Archivo CSS propio -->
+    <!-- Archivos locales -->
+    <script src="./script.js" defer></script>
     <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -32,16 +38,16 @@
         embedded 
         arjs="sourceType: webcam; debugUIEnabled: false;">
 
-        <!-- Cámara con GPS y control de rotación -->
+        <!-- Cámara con GPS -->
         <a-camera gps-camera rotation-reader></a-camera>
 
-        <!-- Modelo 3D (Revisar la ruta correcta del archivo GLTF) -->
+        <!-- Modelo 3D (Verifica la ruta correcta) -->
         <a-entity 
-            gltf-model="./assets/magnemite/magnemite/scene.gltf"
+            gltf-model="./assets/magnemite/scene.gltf"
             position="0 0 0"
             rotation="0 180 0"
             scale="0.15 0.15 0.15"
-            gps-entity-place="longitude: 12.489820; latitude: 41.892590;"
+            gps-entity-place="latitude: 40.730610; longitude: -73.935242;"
             animation-mixer>
         </a-entity>
 
