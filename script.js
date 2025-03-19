@@ -22,9 +22,9 @@ function staticLoadPlaces() {
 
 var models = [
     {
-        url: './assets/magnemite/magnemite/scene.gltf',
-        scale: '0.01 0.01 0.01', 
-        position: '0 0 -5', 
+        url: './assets/magnemite/scene.gltf',  // 🔹 Asegúrate de que la ruta es correcta
+        scale: '0.05 0.05 0.05',  // 🔹 Aumentamos el tamaño
+        position: '0 0 -5',
         rotation: '0 180 0',
         info: 'Magnemite, Lv. 5, HP 10/10',
     },
@@ -43,6 +43,7 @@ var models = [
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
 ];
+
 
 var modelIndex = 0;
 var currentModel = null;
