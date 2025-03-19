@@ -19,11 +19,6 @@
     <!-- Extras para GLTF -->
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras/dist/aframe-extras.loaders.min.js"></script>
 
-    <!-- Configuración AR.js -->
-    <script>
-        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/';
-    </script>
-
     <!-- Archivos locales -->
     <script src="./script.js" defer></script>
     <link rel="stylesheet" type="text/css" href="./style.css">
@@ -41,13 +36,12 @@
         <!-- Cámara con GPS -->
         <a-camera gps-camera rotation-reader></a-camera>
 
-        <!-- Modelo 3D (Verifica la ruta correcta) -->
+        <!-- Modelo 3D (Escala corregida) -->
         <a-entity 
-        
-        gltf-model="./assets/magnemite/magnemite/scene.gltf"
-            position="0 0 0"
+            gltf-model="./assets/magnemite/magnemite/scene.gltf"
+            position="0 0 -5"
             rotation="0 180 0"
-            scale="0.15 0.15 0.15"
+            scale="0.02 0.02 0.02"
             gps-entity-place="latitude: 40.730610; longitude: -73.935242;"
             animation-mixer>
         </a-entity>
