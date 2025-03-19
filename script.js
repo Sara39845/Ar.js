@@ -11,7 +11,7 @@ function staticLoadPlaces() {
         {
             name: 'Pokèmon',
             location: {
-                lat: 40.730610,  // Asegúrate de poner tus coordenadas reales
+                lat: 40.730610,
                 lng: -73.935242,
             },
         },
@@ -21,19 +21,19 @@ function staticLoadPlaces() {
 var models = [
     {
         url: 'assets/magnemite/magnemite/scene.gltf',
-        scale: "0.02 0.02 0.02", // Escala corregida
+        scale: "0.005 0.005 0.005",
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
     {
         url: './assets/articuno/scene.gltf',
-        scale: '0.05 0.05 0.05',
+        scale: '0.007 0.007 0.007',
         rotation: '0 180 0',
         info: 'Articuno, Lv. 80, HP 100/100',
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.04 0.04 0.04',
+        scale: '0.006 0.006 0.006',
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
@@ -44,16 +44,19 @@ var setModel = function (model, entity) {
     if (model.scale) {
         entity.setAttribute('scale', model.scale);
     }
-
     if (model.rotation) {
         entity.setAttribute('rotation', model.rotation);
     }
-
     if (model.position) {
         entity.setAttribute('position', model.position);
     }
 
     entity.setAttribute('gltf-model', model.url);
+
+    // Agregamos el evento para asegurarnos de que el modelo cargó antes de cambiarlo
+    entity.addEventListener('model-loaded', () => {
+        console.log('Modelo cargado correctamente:', model.url);
+    });
 
     const div = document.querySelector('.instructions');
     div.innerText = model.info;
@@ -70,16 +73,21 @@ function renderPlaces(places) {
         model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
 
         setModel(models[modelIndex], model);
-
         model.setAttribute('animation-mixer', '');
 
-        document.querySelector('button[data-action="change"]').addEventListener('click', function () {
-            var entity = document.querySelector('[gps-entity-place]');
-            modelIndex++;
-            var newIndex = modelIndex % models.length;
-            setModel(models[newIndex], entity);
-        });
+        // Modificamos el botón para ser pasivo y evitar bloqueos
+        document.querySelector('button[data-action="change"]').addEventListener(
+            'click',
+            function () {
+                var entity = document.querySelector('[gps-entity-place]');
+                modelIndex++;
+                var newIndex = modelIndex % models.length;
+                setModel(models[newIndex], entity);
+            },
+            { passive: true } // Mejora el rendimiento en dispositivos móviles
+        );
 
         scene.appendChild(model);
     });
 }
+
