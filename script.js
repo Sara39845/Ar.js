@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var models = [
         {
-            url: './assets/magnemite/scene.gltf',
+            url: './assets/magnemite/magnemite/scene.gltf',
             scale: '0.05 0.05 0.05', // Ajustamos tamaño
             position: '0 0 -3',
             rotation: '0 180 0',
