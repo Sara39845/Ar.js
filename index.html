@@ -11,13 +11,48 @@
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
     </script>
     <script src="./script.js"></script>
+    <style>
+        .centered {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        button {
+            background: #ffafc7;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: black;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <a-scene 
-        vr-mode-ui='enabled: false' 
-        embedded
-        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-    <a-camera gps-camera="minDistance: 40;" rotation-reader></a-camera>
-</a-scene>
+
+    <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;">
+        
+        <!-- Cámara con GPS -->
+        <a-camera gps-camera="minDistance: 40;" rotation-reader></a-camera>
+
+        <!-- Modelo 3D dinámico -->
+        <a-entity id="model" gps-entity-place="latitude: 40.730610; longitude: -73.935242;" animation-mixer></a-entity>
+
+    </a-scene>
+
+    <!-- Botón para cambiar de modelo -->
+    <div class="centered">
+        <p id="info">Cargando modelo...</p>
+        <button data-action="change">Cambiar</button>
+    </div>
+
 </body>
+</html>
