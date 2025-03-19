@@ -1,32 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>GeoAR.js demo</title>
-    
-    <!-- Librerías necesarias -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoAR.js Demo</title>
+
+    <!-- Cargar una versión estable de THREE.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r117/three.min.js"></script>
+
+    <!-- A-Frame (Versión recomendada para AR.js) -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
-    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+    <!-- AR.js con soporte para GPS -->
+    <script src="https://raw.githack.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+
+    <!-- Extras para GLTF -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras/dist/aframe-extras.loaders.min.js"></script>
+
+    <!-- Archivos locales -->
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body style="margin: 0; overflow: hidden;">
+
+    <div class="centered instructions">Apunta la cámara al marcador para ver el modelo 3D</div>
+
     <a-scene 
-        vr-mode-ui="enabled: false"
-        embedded
-        arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;">
-        
+        vr-mode-ui="enabled: false" 
+        embedded 
+        arjs="sourceType: webcam; debugUIEnabled: false;">
+
         <!-- Cámara con GPS -->
         <a-camera gps-camera rotation-reader></a-camera>
+
+        <!-- Modelo 3D (Escala corregida) -->
+        <a-entity 
+            gltf-model="./assets/magnemite/magnemite/scene.gltf"
+            position="0 0 -5"
+            rotation="0 180 0"
+            scale="0.02 0.02 0.02"
+            gps-entity-place="latitude: 40.730610; longitude: -73.935242;"
+            animation-mixer>
+        </a-entity>
+
     </a-scene>
 
-    <!-- Agregamos un botón para reiniciar -->
-    <button onclick="window.location.reload()" style="position: absolute; top: 10px; left: 10px; z-index: 10;">
-        Recargar
-    </button>
+    <div class="centered">
+        <button data-action="change">Cambiar</button>
+    </div>
 
-    <!-- Importamos el script después de la carga del body -->
-    <script src="./script.js"></script>
 </body>
+
 </html>
