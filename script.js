@@ -9,9 +9,9 @@ window.onload = () => {
 function staticLoadPlaces() {
     return [
         {
-            name: 'Pokémon',
+            name: 'Pokèmon',
             location: {
-                lat: 40.730610, // Asegúrate de tener coordenadas reales
+                lat: 40.730610,
                 lng: -73.935242,
             },
         },
@@ -21,56 +21,73 @@ function staticLoadPlaces() {
 var models = [
     {
         url: 'assets/magnemite/magnemite/scene.gltf',
-        scale: "0.1 0.1 0.1", // Tamaño intermedio
+        scale: "0.005 0.005 0.005",
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
     {
         url: './assets/articuno/scene.gltf',
-        scale: '0.1 0.1 0.1', // Tamaño intermedio
+        scale: '0.005 0.005 0.005',
         rotation: '0 180 0',
         info: 'Articuno, Lv. 80, HP 100/100',
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.1 0.1 0.1', // Tamaño intermedio
+        scale: '0.005 0.005 0.005',
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
 ];
 
 var modelIndex = 0;
-var currentModel = null; // Guardar el modelo actual para eliminarlo después
-
-function setModel(model, scene) {
-    // Si ya hay un modelo visible, lo eliminamos antes de agregar el nuevo
-    if (currentModel) {
-        scene.removeChild(currentModel);
+var setModel = function (model, entity) {
+    if (model.scale) {
+        entity.setAttribute('scale', model.scale);
+    }
+    if (model.rotation) {
+        entity.setAttribute('rotation', model.rotation);
+    }
+    if (model.position) {
+        entity.setAttribute('position', model.position);
     }
 
-    let entity = document.createElement('a-entity');
-    entity.setAttribute('scale', model.scale);
-    entity.setAttribute('rotation', model.rotation);
     entity.setAttribute('gltf-model', model.url);
-    entity.setAttribute('gps-entity-place', `latitude: 40.730610; longitude: -73.935242;`);
-    entity.setAttribute('animation-mixer', '');
 
-    scene.appendChild(entity);
-    currentModel = entity; // Guardamos el modelo actual para futuras eliminaciones
+    // Agregamos el evento para asegurarnos de que el modelo cargó antes de cambiarlo
+    entity.addEventListener('model-loaded', () => {
+        console.log('Modelo cargado correctamente:', model.url);
+    });
 
     const div = document.querySelector('.instructions');
     div.innerText = model.info;
-}
+};
 
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
-    places.forEach(() => {
-        setModel(models[modelIndex], scene);
+    places.forEach((place) => {
+        let latitude = place.location.lat;
+        let longitude = place.location.lng;
 
-        document.querySelector('button[data-action="change"]').addEventListener('click', function () {
-            modelIndex = (modelIndex + 1) % models.length; // Cambiar al siguiente modelo
-            setModel(models[modelIndex], scene);
-        });
+        let model = document.createElement('a-entity');
+        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+
+        setModel(models[modelIndex], model);
+        model.setAttribute('animation-mixer', '');
+
+        // Modificamos el botón para ser pasivo y evitar bloqueos
+        document.querySelector('button[data-action="change"]').addEventListener(
+            'click',
+            function () {
+                var entity = document.querySelector('[gps-entity-place]');
+                modelIndex++;
+                var newIndex = modelIndex % models.length;
+                setModel(models[newIndex], entity);
+            },
+            { passive: true } // Mejora el rendimiento en dispositivos móviles
+        );
+
+        scene.appendChild(model);
     });
 }
+
