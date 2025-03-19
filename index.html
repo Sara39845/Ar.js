@@ -7,52 +7,38 @@
     <title>GeoAR.js demo</title>
     <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
     <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
     </script>
     <script src="./script.js"></script>
-    <style>
-        .centered {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        button {
-            background: #ffafc7;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            color: black;
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./style.css"/>
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-
-    <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;">
+    <div class="centered instructions"></div>
+    
+    <a-scene 
+        vr-mode-ui='enabled: false' 
+        embedded
+        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
         
-        <!-- Cámara con GPS -->
-        <a-camera gps-camera="minDistance: 40;" rotation-reader></a-camera>
-
-        <!-- Modelo 3D dinámico -->
-        <a-entity id="model" gps-entity-place="latitude: 40.730610; longitude: -73.935242;" animation-mixer></a-entity>
+        <a-camera gps-camera rotation-reader></a-camera>
+        
+        <!-- Modelo de Magnemite -->
+        <a-entity 
+            gltf-model="./assets/magnemite/scene.gltf" 
+            rotation="0 180 0" 
+            scale="0.15 0.15 0.15" 
+            gps-entity-place="longitude: 12.489820; latitude: 41.892590;" 
+            animation-mixer>
+        </a-entity>
 
     </a-scene>
 
-    <!-- Botón para cambiar de modelo -->
     <div class="centered">
-        <p id="info">Cargando modelo...</p>
-        <button data-action="change">Cambiar</button>
+        <button data-action="change"></button>
     </div>
-
 </body>
+
 </html>
