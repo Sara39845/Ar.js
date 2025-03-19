@@ -16,25 +16,19 @@
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <div class="centered instructions">Selecciona un Pokémon para ver en AR</div>
+    <div class="centered instructions">Cargando modelo en AR...</div>
 
     <a-scene 
         vr-mode-ui='enabled: false' 
         embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-
-        <a-camera gps-camera rotation-reader></a-camera>
         
-        <!-- Contenedor de Pokémon -->
+        <a-camera gps-camera rotation-reader></a-camera>
+
+        <!-- Contenedor donde se insertará el modelo -->
         <a-entity id="pokemon-container"></a-entity>
 
     </a-scene>
-
-    <div class="centered">
-        <button onclick="changeModel('magnemite')">Magnemite</button>
-        <button onclick="changeModel('dragonite')">Dragonite</button>
-        <button onclick="changeModel('pajaro')">Pájaro</button>
-    </div>
 </body>
 
 </html>

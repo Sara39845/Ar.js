@@ -9,10 +9,10 @@ window.onload = () => {
 function staticLoadPlaces() {
     return [
         {
-            name: 'Pokèmon',
+            name: 'Pokémon',
             location: {
-                // lat: <your-latitude>,
-                // lng: <your-longitude>,
+                lat: 41.892590,  // Reemplaza con tu latitud real
+                lng: 12.489820,  // Reemplaza con tu longitud real
             },
         },
     ];
@@ -21,7 +21,7 @@ function staticLoadPlaces() {
 var models = [
     {
         url: './assets/magnemite/magnemite/scene.gltf',
-        scale: '0.5 0.5 0.5',
+        scale: '0.1 0.1 0.1',
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
@@ -40,24 +40,15 @@ var models = [
 ];
 
 var modelIndex = 0;
-var setModel = function (model, entity) {
-    if (model.scale) {
-        entity.setAttribute('scale', model.scale);
-    }
 
-    if (model.rotation) {
-        entity.setAttribute('rotation', model.rotation);
-    }
-
-    if (model.position) {
-        entity.setAttribute('position', model.position);
-    }
-
+function setModel(model, entity) {
     entity.setAttribute('gltf-model', model.url);
-
-    const div = document.querySelector('.instructions');
-    div.innerText = model.info;
-};
+    entity.setAttribute('scale', model.scale);
+    entity.setAttribute('rotation', model.rotation);
+    
+    const infoDiv = document.querySelector('.instructions');
+    infoDiv.innerText = model.info;
+}
 
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
@@ -68,16 +59,15 @@ function renderPlaces(places) {
 
         let model = document.createElement('a-entity');
         model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-
-        setModel(models[modelIndex], model);
-
         model.setAttribute('animation-mixer', '');
 
+        // Agregar el modelo correcto al inicio
+        setModel(models[modelIndex], model);
+
+        // Botón para cambiar modelos
         document.querySelector('button[data-action="change"]').addEventListener('click', function () {
-            var entity = document.querySelector('[gps-entity-place]');
-            modelIndex++;
-            var newIndex = modelIndex % models.length;
-            setModel(models[newIndex], entity);
+            modelIndex = (modelIndex + 1) % models.length; // Cambia al siguiente modelo
+            setModel(models[modelIndex], model);
         });
 
         scene.appendChild(model);
