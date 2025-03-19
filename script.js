@@ -21,21 +21,21 @@ function staticLoadPlaces() {
 var models = [
     {
         url: './assets/magnemite/magnemite/scene.gltf',
-        scale: '0.02 0.02 0.02', // Más pequeño
-        position: '0 0 -5', // Alejado de la cámara
+        scale: '0.01 0.01 0.01', // 🔹 Magnemite más pequeño
+        position: '0 0 -5', 
         rotation: '0 180 0',
         info: 'Magnemite, Lv. 5, HP 10/10',
     },
     {
         url: './assets/articuno/scene.gltf',
-        scale: '0.02 0.02 0.02', // Más pequeño
+        scale: '0.02 0.02 0.02', // 🔹 Articuno normal
         position: '0 0 -5',
         rotation: '0 180 0',
         info: 'Articuno, Lv. 80, HP 100/100',
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.02 0.02 0.02', // Más pequeño
+        scale: '0.02 0.02 0.02', // 🔹 Dragonite normal
         position: '0 0 -5',
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
