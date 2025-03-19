@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset='utf-8'>
@@ -16,29 +16,50 @@
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <div class="centered instructions"></div>
-    
+    <div class="centered instructions">Selecciona un Pokémon para ver en AR</div>
+
     <a-scene 
         vr-mode-ui='enabled: false' 
         embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-        
+
         <a-camera gps-camera rotation-reader></a-camera>
         
-        <!-- Modelo de Magnemite -->
-        <a-entity 
-            gltf-model="./assets/magnemite/magnemite/scene.gltf" 
-            rotation="0 180 0" 
-            scale="0.15 0.15 0.15" 
-            gps-entity-place="longitude: 12.489820; latitude: 41.892590;" 
-            animation-mixer>
+        <!-- Modelo de Pokémon que se actualizará dinámicamente -->
+        <a-entity id="pokemon-model" 
+                  gltf-model="" 
+                  rotation="0 180 0" 
+                  scale="0.05 0.05 0.05" 
+                  gps-entity-place="longitude: 12.489820; latitude: 41.892590;" 
+                  animation-mixer>
         </a-entity>
-
     </a-scene>
 
     <div class="centered">
-        <button data-action="change"></button>
+        <button onclick="changeModel('magnemite')">Magnemite</button>
+        <button onclick="changeModel('dragonite')">Dragonite</button>
+        <button onclick="changeModel('pajaro')">Pájaro</button>
     </div>
+
+    <script>
+        function changeModel(pokemon) {
+            let model = document.getElementById("pokemon-model");
+
+            // Limpiar modelo anterior para evitar duplicados
+            model.setAttribute("gltf-model", ""); 
+
+            // Definir rutas de modelos
+            let models = {
+                "magnemite": "./assets/magnemite/scene.gltf",
+                "dragonite": "./assets/dragonite/scene.gltf",
+                "pajaro": "./assets/pajaro/scene.gltf"
+            };
+
+            if (models[pokemon]) {
+                model.setAttribute("gltf-model", models[pokemon]);
+            }
+        }
+    </script>
 </body>
 
 </html>
