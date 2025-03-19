@@ -9,7 +9,7 @@ window.onload = () => {
 function staticLoadPlaces() {
     return [
         {
-            name: 'Pokèmon',
+            name: 'Pokémon',
             location: {
                 lat: 40.730610, // Asegúrate de tener coordenadas reales
                 lng: -73.935242,
@@ -21,30 +21,42 @@ function staticLoadPlaces() {
 var models = [
     {
         url: 'assets/magnemite/magnemite/scene.gltf',
-        scale: "0.15 0.15 0.15", // Tamaño intermedio
+        scale: "0.1 0.1 0.1", // Tamaño intermedio
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
     {
         url: './assets/articuno/scene.gltf',
-        scale: '0.15 0.15 0.15', // Mismo tamaño que Magnemite
+        scale: '0.1 0.1 0.1', // Tamaño intermedio
         rotation: '0 180 0',
         info: 'Articuno, Lv. 80, HP 100/100',
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.15 0.15 0.15', // Mismo tamaño que Magnemite
+        scale: '0.1 0.1 0.1', // Tamaño intermedio
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
 ];
 
 var modelIndex = 0;
+var currentModel = null; // Guardar el modelo actual para eliminarlo después
 
-function setModel(model, entity) {
+function setModel(model, scene) {
+    // Si ya hay un modelo visible, lo eliminamos antes de agregar el nuevo
+    if (currentModel) {
+        scene.removeChild(currentModel);
+    }
+
+    let entity = document.createElement('a-entity');
     entity.setAttribute('scale', model.scale);
     entity.setAttribute('rotation', model.rotation);
     entity.setAttribute('gltf-model', model.url);
+    entity.setAttribute('gps-entity-place', `latitude: 40.730610; longitude: -73.935242;`);
+    entity.setAttribute('animation-mixer', '');
+
+    scene.appendChild(entity);
+    currentModel = entity; // Guardamos el modelo actual para futuras eliminaciones
 
     const div = document.querySelector('.instructions');
     div.innerText = model.info;
@@ -53,22 +65,12 @@ function setModel(model, entity) {
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
-    places.forEach((place) => {
-        let latitude = place.location.lat;
-        let longitude = place.location.lng;
+    places.forEach(() => {
+        setModel(models[modelIndex], scene);
 
-        let model = document.createElement('a-entity');
-        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-
-        setModel(models[modelIndex], model);
-        model.setAttribute('animation-mixer', '');
-
-        scene.appendChild(model);
-
-        // Corregimos el evento del botón para cambiar modelos
         document.querySelector('button[data-action="change"]').addEventListener('click', function () {
-            modelIndex = (modelIndex + 1) % models.length; // Ciclar entre modelos
-            setModel(models[modelIndex], model);
+            modelIndex = (modelIndex + 1) % models.length; // Cambiar al siguiente modelo
+            setModel(models[modelIndex], scene);
         });
     });
 }
