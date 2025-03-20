@@ -21,7 +21,7 @@ function staticLoadPlaces() {
 var models = [
     {
         url: 'assets/magnemite/magnemite/scene.gltf',
-        scale: "0.02 0.02 0.02", // Escala corregida
+        scale: "0.03 0.03 0.03", // Escala corregida
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
@@ -33,7 +33,7 @@ var models = [
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.04 0.04 0.04',
+        scale: '0.03 0.03 0.03',
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
